@@ -2,6 +2,8 @@
 
 **Object-Storage** 提供方便快捷的对象存储操作
 
+**[Wiki](https://deepwiki.com/salt-hai/multiple-object-storage)**
+
 **目前提供的功能模块列表**
 
 ```
