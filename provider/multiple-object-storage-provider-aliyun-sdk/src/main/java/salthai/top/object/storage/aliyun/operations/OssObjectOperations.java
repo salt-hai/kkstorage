@@ -10,6 +10,8 @@ import com.aliyun.oss.model.ObjectListing;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
 import com.aliyun.oss.model.SetObjectAclRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import salthai.top.object.storage.aliyun.BaseOssOperations;
 import salthai.top.object.storage.aliyun.OssConstants;
 import salthai.top.object.storage.aliyun.converter.ObjectVersionArgumentsToGenericRequestConverter;
@@ -49,8 +51,6 @@ import salthai.top.object.storage.core.function.Converter;
 import salthai.top.object.storage.core.operations.ObjectOperations;
 import salthai.top.object.storage.core.provider.ProviderClientManager;
 import salthai.top.object.storage.core.unit.DataSize;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -64,7 +64,7 @@ public class OssObjectOperations extends BaseOssOperations implements ObjectOper
 
 	private static final String LOG_PREFIX = OssConstants.LOG_PREFIX;
 
-	private final static Logger log = LoggerFactory.getLogger(OssBucketOperations.class);
+	private final static Logger log = LoggerFactory.getLogger(OssObjectOperations.class);
 
 	/**
 	 * 1GB

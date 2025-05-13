@@ -8,6 +8,10 @@
 
 ```
 |-- multiple-object-storage-dependencies   -- 项目本身各子模块的依赖管理，以及第三方模块的依赖管理
+|-- core
+|  |--multiple-object-storage-core  --公用基础代码
+|-- 
+|
 ```
 
 ## 使用方法
