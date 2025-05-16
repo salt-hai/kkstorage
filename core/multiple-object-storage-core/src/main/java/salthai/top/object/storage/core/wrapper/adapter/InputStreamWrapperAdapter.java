@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class InputStreamWrapperAdapter implements FileWrapperAdapter {
 
-	private static final Logger log = LoggerFactory.getLogger(InputStreamWrapper.class);
+	private static final Logger log = LoggerFactory.getLogger(InputStreamWrapperAdapter.class);
 
 	private final ContentTypeDetect contentTypeDetect;
 

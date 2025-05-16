@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.s3.model.PutBucketAclRequest;
  *
  * @author Kuang HaiBo 2024/7/10 17:06
  */
-public class SetBucketAclArgumentsToPutBucketAclRequestConverter
+public class ArgumentsToPutBucketAclRequestConverter
 		extends BaseArgumentsToAwsRequestConverter<SetBucketAclArguments, PutBucketAclRequest> {
 
 	/**

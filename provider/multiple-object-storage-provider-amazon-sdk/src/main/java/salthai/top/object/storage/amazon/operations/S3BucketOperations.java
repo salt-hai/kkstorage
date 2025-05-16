@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import salthai.top.object.storage.amazon.BaseS3Operations;
 import salthai.top.object.storage.amazon.S3Constants;
 import salthai.top.object.storage.amazon.client.S3ClientPackage;
-import salthai.top.object.storage.amazon.converter.argument.CreateBucketArgumentsToCreateBucketRequestConverter;
-import salthai.top.object.storage.amazon.converter.argument.DelBucketArgumentsToDeleteBucketRequestConverter;
-import salthai.top.object.storage.amazon.converter.argument.SetBucketAclArgumentsToPutBucketAclRequestConverter;
+import salthai.top.object.storage.amazon.converter.argument.ArgumentsToCreateBucketRequestConverter;
+import salthai.top.object.storage.amazon.converter.argument.ArgumentsToDeleteBucketRequestConverter;
+import salthai.top.object.storage.amazon.converter.argument.ArgumentsToPutBucketAclRequestConverter;
 import salthai.top.object.storage.amazon.converter.domain.BucketToBucketDomainConverter;
 import salthai.top.object.storage.amazon.converter.domain.OwnerToOwnerDomainConverter;
 import salthai.top.object.storage.core.arguments.bucket.CreateBucketArguments;
@@ -102,7 +102,7 @@ public class S3BucketOperations extends BaseS3Operations implements BucketOperat
 			try {
 				s3ClientPackage.getS3Client()
 					.createBucket(ConverterUtils.toTarget(arguments,
-							new CreateBucketArgumentsToCreateBucketRequestConverter()));
+							new ArgumentsToCreateBucketRequestConverter()));
 				BucketDomain bucketDomain = new BucketDomain();
 				// response not have the other field,
 				bucketDomain.setBucketName(arguments.getBucketName());
@@ -128,7 +128,7 @@ public class S3BucketOperations extends BaseS3Operations implements BucketOperat
 			try {
 				s3ClientPackage.getS3Client()
 					.putBucketAcl(ConverterUtils.toTarget(arguments,
-							new SetBucketAclArgumentsToPutBucketAclRequestConverter()));
+							new ArgumentsToPutBucketAclRequestConverter()));
 				return true;
 			}
 			catch (S3Exception e) {
@@ -150,7 +150,7 @@ public class S3BucketOperations extends BaseS3Operations implements BucketOperat
 			try {
 				s3ClientPackage.getS3Client()
 					.deleteBucket(
-							ConverterUtils.toTarget(arguments, new DelBucketArgumentsToDeleteBucketRequestConverter()));
+							ConverterUtils.toTarget(arguments, new ArgumentsToDeleteBucketRequestConverter()));
 			}
 			catch (S3Exception e) {
 				log.error("==> {} del bucket error the cause:", LOG_PREFIX, e);

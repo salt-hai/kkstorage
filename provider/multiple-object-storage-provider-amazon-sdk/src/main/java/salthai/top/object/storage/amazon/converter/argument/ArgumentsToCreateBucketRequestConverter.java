@@ -9,7 +9,7 @@ import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
  *
  * @author Kuang HaiBo 2024/7/10 16:13
  */
-public class CreateBucketArgumentsToCreateBucketRequestConverter
+public class ArgumentsToCreateBucketRequestConverter
 		extends BaseArgumentsToAwsRequestConverter<CreateBucketArguments, CreateBucketRequest> {
 
 	/**

@@ -9,7 +9,7 @@ import software.amazon.awssdk.services.s3.model.DeleteBucketRequest;
  *
  * @author Kuang HaiBo 2024/7/10 17:21
  */
-public class DelBucketArgumentsToDeleteBucketRequestConverter
+public class ArgumentsToDeleteBucketRequestConverter
 		extends BaseArgumentsToAwsRequestConverter<DelBucketArguments, DeleteBucketRequest> {
 
 	/**

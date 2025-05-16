@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import salthai.top.object.storage.amazon.BaseS3Operations;
 import salthai.top.object.storage.amazon.S3Constants;
 import salthai.top.object.storage.amazon.client.S3ClientPackage;
+import salthai.top.object.storage.amazon.converter.argument.ArgumentsToUploadRequestConverter;
+import salthai.top.object.storage.amazon.converter.domain.PutObjectResponseToDomainConverter;
 import salthai.top.object.storage.core.arguments.object.CopyObjectArguments;
 import salthai.top.object.storage.core.arguments.object.DelObjectArguments;
 import salthai.top.object.storage.core.arguments.object.DelObjectsArguments;
@@ -21,8 +23,13 @@ import salthai.top.object.storage.core.domain.object.ListObjectsDomain;
 import salthai.top.object.storage.core.domain.object.ObjectMetadataDomain;
 import salthai.top.object.storage.core.domain.object.PutObjectDomain;
 import salthai.top.object.storage.core.exceptions.ObjectStorageException;
+import salthai.top.object.storage.core.exceptions.PutFileException;
 import salthai.top.object.storage.core.operations.ObjectOperations;
 import salthai.top.object.storage.core.provider.ProviderClientManager;
+import salthai.top.object.storage.core.utils.ConverterUtils;
+import software.amazon.awssdk.services.s3.model.PutObjectResponse;
+import software.amazon.awssdk.transfer.s3.model.CompletedUpload;
+import software.amazon.awssdk.transfer.s3.model.Upload;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +61,23 @@ public class S3ObjectOperations extends BaseS3Operations implements ObjectOperat
 	 */
 	@Override
 	public PutObjectDomain putObject(PutObjectArguments putObjectArguments) throws ObjectStorageException {
-		return null;
+		return execute(s3ClientPackage -> {
+			try {
+				Upload upload = s3ClientPackage.getS3TransferManager()
+					.upload(ConverterUtils.toTarget(putObjectArguments, new ArgumentsToUploadRequestConverter()));
+				CompletedUpload join = upload.completionFuture().join();
+				PutObjectResponse response = join.response();
+				PutObjectDomain target = ConverterUtils.toTarget(response, new PutObjectResponseToDomainConverter());
+				target.setObjectName(putObjectArguments.getObjectName());
+				target.setBucketName(putObjectArguments.getBucketName());
+				target.setRegion(putObjectArguments.getRegion());
+				return target;
+			}
+			catch (UnsupportedOperationException e) {
+				log.error("==>  {} s3 put error: ", LOG_PREFIX, e);
+				throw new PutFileException(e);
+			}
+		});
 	}
 
 	/**
